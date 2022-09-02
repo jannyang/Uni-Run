@@ -5,7 +5,8 @@ using UnityEngine;
 public class CoinSpawner : MonoBehaviour
 {
     public GameObject coinPrefab;
-    public float coinSpawnTime = 0.5f;
+    public PlatformSpawner platformSpawner;
+    public float coinSpawnTime = 0.1f;
     public int coinCount = 10;
 
     private GameObject[] coins;
@@ -20,6 +21,7 @@ public class CoinSpawner : MonoBehaviour
     void Start()
     {
         coins = new GameObject[coinCount];
+        platformSpawner = GetComponent<PlatformSpawner>();
 
         for(int i = 0; i < coinCount; i++)
         {
@@ -40,10 +42,9 @@ public class CoinSpawner : MonoBehaviour
         {
             
             lastTime = Time.time;
-            float yPos = Random.Range(yMin, yMax);
             //float yPos = 3f;
             
-            coins[currentIdx].transform.position = new Vector2(xPos, yPos);
+            //coins[currentIdx].transform.position = new Vector2(xPos, yPos);
 
             currentIdx++;
             

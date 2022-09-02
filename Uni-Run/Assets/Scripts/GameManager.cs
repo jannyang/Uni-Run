@@ -9,10 +9,16 @@ public class GameManager : MonoBehaviour {
 
     public bool isGameover = false; // 게임 오버 상태
     public Text scoreText; // 점수를 출력할 UI 텍스트
+    public Text highScoreText;
     public GameObject gameoverUI; // 게임 오버시 활성화 할 UI 게임 오브젝트
 
     private int score = 0; // 게임 점수
+    private int highScore = 0;
 
+    private void Start()
+    {
+        highScore = 0;
+    }
     // 게임 시작과 동시에 싱글턴을 구성
     void Awake() {
         // 싱글톤 변수 instance가 비어있는가?
@@ -33,6 +39,9 @@ public class GameManager : MonoBehaviour {
     }
 
     void Update() {
+        highScore = PlayerPrefs.GetInt("HighScore");
+        highScoreText.text = "High Score : " + highScore;
+        
         // 게임 오버 상태에서 게임을 재시작할 수 있게 하는 처리
         if (isGameover && Input.GetMouseButton(0))
         {
@@ -53,5 +62,13 @@ public class GameManager : MonoBehaviour {
     public void OnPlayerDead() {
         isGameover = true;
         gameoverUI.SetActive(true);
+        if(score >= highScore)
+        {
+            highScore = score;
+            PlayerPrefs.SetInt("HighScore", highScore);
+        }
+
+        highScoreText.text = "High Score : " + highScore;
+
     }
 }

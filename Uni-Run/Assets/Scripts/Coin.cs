@@ -15,12 +15,4 @@ public class Coin : MonoBehaviour
             GameManager.instance.AddScore(1);
         }
     }
-
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision.tag == "Dead")
-        {
-            gameObject.transform.position = poolPosition;
-        }
-    }
 }

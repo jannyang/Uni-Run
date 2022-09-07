@@ -1622,7 +1622,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   platformPrefab: {fileID: 1671242928466520, guid: f9fc9d007ca214ed9ad2949a47f59fb5,
     type: 3}
-  coinPrefab: {fileID: 4236746993140600048, guid: 0603b75a0f161f549b231924defb3de7,
+  coinPrefab: {fileID: 6481986817515890374, guid: 1aa0ed4e8d827c048beceda8d3236743,
     type: 3}
   scrollingObject: {fileID: 0}
   count: 3

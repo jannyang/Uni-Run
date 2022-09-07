@@ -1,11 +1,12 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 // 발판을 생성하고 주기적으로 재배치하는 스크립트
 public class PlatformSpawner : MonoBehaviour {
     
     public GameObject platformPrefab; // 생성할 발판의 원본 프리팹
     public GameObject coinPrefab;
-    public ScrollingObject scrollingObject;
     
     [SerializeField]
     private int count = 3; // 생성할 발판의 개수
@@ -23,7 +24,8 @@ public class PlatformSpawner : MonoBehaviour {
     public float yPos = 0f;
     private float xPos = 20f; // 배치할 위치의 x 값
 
-    private GameObject[] platforms; // 미리 생성한 발판들
+    //private GameObject[] platforms; // 미리 생성한 발판들
+    private List<Platform> platforms;
     private GameObject[] coins;
 
     private int currentIndex = 0; // 사용할 현재 순번의 발판
@@ -41,19 +43,28 @@ public class PlatformSpawner : MonoBehaviour {
 
     void Start() {
 
-        platforms = new GameObject[count];
+        //platforms = new GameObject[count];
         coins = new GameObject[coinCount];
 
-        
-        for(int i = 0; i< count; i++)
+        platforms = new List<Platform>();
+        for (int i = 0; i<count; i++)
         {
-            platforms[i] = Instantiate(platformPrefab, poolPosition, Quaternion.identity);
+            GameObject go = Instantiate(platformPrefab, poolPosition, Quaternion.identity);
+            Platform pf = go.GetComponent<Platform>();
+            platforms.Add(pf);
+            pf.Init(coinPrefab);
         }
 
-        for(int j = 0; j< coinCount; j++)
-        {
-            coins[j] = Instantiate(coinPrefab, poolPosition, Quaternion.identity);
-        }
+
+        //for(int i = 0; i< count; i++)
+        //{
+        //    platforms[i] = Instantiate(platformPrefab, poolPosition, Quaternion.identity);
+        //}
+
+        //for(int j = 0; j< coinCount; j++)
+        //{
+        //    coins[j] = Instantiate(coinPrefab, poolPosition, Quaternion.identity);
+        //}
 
         emptySpawnTime = 0f;
         lastSpawnTime = 0f;
@@ -79,9 +90,9 @@ public class PlatformSpawner : MonoBehaviour {
             
             posInterval = lastYpos - yPos;
 
-            platforms[currentIndex].SetActive(false); // Platform 컴포넌트의 OnEnable() 메서드를 통한 reset
-            platforms[currentIndex].SetActive(true); // OnEnable() -> 컴포넌트 활성화될 때마다 실행
-
+            //platforms[currentIndex].SetActive(false); // Platform 컴포넌트의 OnEnable() 메서드를 통한 reset
+            //platforms[currentIndex].SetActive(true); // OnEnable() -> 컴포넌트 활성화될 때마다 실행
+            platforms[currentIndex].Init(coinPrefab);
             platforms[currentIndex].transform.position = new Vector2(xPos, yPos);
 
             currentIndex++;
@@ -94,36 +105,36 @@ public class PlatformSpawner : MonoBehaviour {
         // 순서를 돌아가며 주기적으로 발판을 배치
 
 
-        emptySpawnTime = timeBetSpawn - 1f;
-        intervalChange = coinSpawnTime * posInterval / emptySpawnTime;
+        //emptySpawnTime = timeBetSpawn - 1f;
+        //intervalChange = coinSpawnTime * posInterval / emptySpawnTime;
 
-        if (Time.time >= lastCoinSpawnTime + coinSpawnTime)
-        {
-            lastCoinSpawnTime = Time.time;
-            coinSpawnSum += coinSpawnTime;
+        //if (Time.time >= lastCoinSpawnTime + coinSpawnTime)
+        //{
+        //    lastCoinSpawnTime = Time.time;
+        //    coinSpawnSum += coinSpawnTime;
 
-            if (coinSpawnSum < 1f)
-            {
-                coins[coinIdx].transform.position = new Vector2(xPos - 4.3f, yPos + 1.4f);
-                coinIdx++;
-            }
+        //    if (coinSpawnSum < 1f)
+        //    {
+        //        coins[coinIdx].transform.position = new Vector2(xPos - 4.3f, yPos + 1.4f);
+        //        coinIdx++;
+        //    }
 
-            else if (coinSpawnSum >= 1f)
-            {
-                yPos += intervalChange;
-                coins[coinIdx].transform.position = new Vector2(xPos - 4.3f, yPos + 1.4f);
-                coinIdx++;
-            }
+        //    else if (coinSpawnSum >= 1f)
+        //    {
+        //        yPos += intervalChange;
+        //        coins[coinIdx].transform.position = new Vector2(xPos - 4.3f, yPos + 1.4f);
+        //        coinIdx++;
+        //    }
 
-            if (coinSpawnSum >= timeBetSpawn)
-            {
-                coinSpawnSum = 0;
-            }
+        //    if (coinSpawnSum >= timeBetSpawn)
+        //    {
+        //        coinSpawnSum = 0;
+        //    }
 
-            if (coinIdx >= coinCount)
-            {
-                coinIdx = 0;
-            }
-        }
+        //    if (coinIdx >= coinCount)
+        //    {
+        //        coinIdx = 0;
+        //    }
+        //}
     }
 }

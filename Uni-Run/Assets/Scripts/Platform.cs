@@ -50,8 +50,8 @@ public class Platform : MonoBehaviour {
                     {
                         Vector3 pos = obstacles[i].transform.position;
                         pos.y += 1;
-                        GameObject go = Instantiate(coinpref, this.transform); //Instantiate(coinpref, this.transform) ->Platform(this)의 하위로 coinpref을 생성한다
-                        go.transform.position = pos;
+                        GameObject go = Instantiate(coinpref, this.transform); //Instantiate(coinpref, this.transform) ->Platform(this)의 하위로 coinpref을 생성한다 
+                        go.transform.position = pos;                           //-> ScrollingObject 스크립트 사용안해도 된다.
                     }
                 }
                 break;
